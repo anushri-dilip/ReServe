@@ -11,10 +11,15 @@ type UserRole = 'provider' | 'volunteer' | 'receiver' | null;
 const Index = () => {
   const [onboardingComplete, setOnboardingComplete] = useState<boolean>(false);
   const [userRole, setUserRole] = useState<UserRole>(null);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
   
   const handleOnboardingComplete = (role: UserRole) => {
     setUserRole(role);
     setOnboardingComplete(true);
+  };
+  
+  const handleOpenMenu = () => {
+    setMenuOpen(true);
   };
   
   // Determine which component to show based on user role
@@ -36,7 +41,7 @@ const Index = () => {
   
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-white to-reserve-neutral/30 dark:from-reserve-dark dark:to-black">
-      <Header />
+      <Header openMenu={handleOpenMenu} />
       
       <main className="flex-1 pt-24 pb-6 px-4 flex items-center justify-center">
         <div className="w-full max-w-screen-lg mx-auto">
