@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Camera, Upload, Loader2 } from 'lucide-react';
 import { analyzeFoodImage, type AnalysisResult } from '@/utils/imageAnalysis';
+import { saveImageAnalysis } from '@/utils/imageService';
 import ResultCard from './ResultCard';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -50,6 +51,15 @@ const FoodAnalyzer: React.FC = () => {
     try {
       const analysisResult = await analyzeFoodImage(file);
       setResult(analysisResult);
+      
+      // Save the image to our service when analysis is complete
+      if (image) {
+        await saveImageAnalysis(
+          image, 
+          analysisResult.category,
+          "Your Restaurant Name" // This should come from user profile in real app
+        );
+      }
       
       toast({
         title: "Analysis Complete",
